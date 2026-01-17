@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Expense Tracker</title>
+<style>
+  body { font-family: Arial, sans-serif; background-color: #f2f2f2; padding: 20px; }
+  h1, h2, h3 { text-align: center; }
+  form { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+  input, select, button { padding: 10px; border-radius: 8px; border: 1px solid #ccc; font-size: 14px; }
+  button { background-color: #4CAF50; color: white; border: none; cursor: pointer; }
+  #expensesContainer { display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; }
+  .expenseCard { width: 200px; padding: 15px; border-radius: 12px; color: white; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); position: relative; }
+  .expenseCard button { background-color: rgba(255,255,255,0.3); border: none; padding: 5px; border-radius: 6px; color: white; cursor: pointer; margin-top: 5px; }
+  .expenseCard button:hover { opacity: 0.8; }
+
+  /* Category colors */
+  .food { background-color: #f56565; }
+  .transport { background-color: #63b3ed; }
+  .bills { background-color: #68d391; }
+  .shopping { background-color: #fbb6ce; color: black; }
+  .entertainment { background-color: #faf089; color: black; }
+  .others { background-color: #a0aec0; }
+
+  ul { list-style: none; padding: 0; text-align: center; }
+  ul li { margin: 4px 0; font-weight: bold; }
+
+  /* Modal */
+  .modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4); }
+  .modal-content { background-color: #fefefe; margin: 10% auto; padding: 20px; border-radius: 12px; width: 300px; display: flex; flex-direction: column; gap: 10px; }
+  .modal-content input, .modal-content select { width: 100%; }
+  .close { color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer; }
+  .close:hover { color: black; }
+  
+  /* Filter dropdown */
+  #filterCategory { margin: 0 auto 20px; display: block; padding: 10px; border-radius: 8px; }
+</style>
+</head>
+<body>
+
+<h1>Expense Tracker</h1>
+
+<!-- Add Expense Form -->
+<form id="expenseForm">
+  <input type="date" id="date" required>
+  <select id="category" required>
+    <option value="" disabled selected>Select Category</option>
+    <option value="Food">Food 🍔</option>
+    <option value="Transport">Transport 🚌</option>
+    <option value="Bills">Bills 💡</option>
+    <option value="Shopping">Shopping 🛍️</option>
+    <option value="Entertainment">Entertainment 🎮</option>
+    <option value="Others">Others 📝</option>
+  </select>
+  <input type="number" id="amount" placeholder="Amount" required>
+  <button type="submit">Add Expense</button>
+</form>
+
+<!-- Category Filter -->
+<select id="filterCategory">
+  <option value="All">All Categories</option>
+  <option value="Food">Food 🍔</option>
+  <option value="Transport">Transport 🚌</option>
+  <option value="Bills">Bills 💡</option>
+  <option value="Shopping">Shopping 🛍️</option>
+  <option value="Entertainment">Entertainment 🎮</option>
+  <option value="Others">Others 📝</option>
+</select>
+
+<h2>Expenses</h2>
+<div id="expensesContainer"></div>
+
+<h3>Total: ₱<span id="total">0</span></h3>
+
+<h3>Summary</h3>
+<ul>
+  <li>Today: ₱<span id="dayTotal">0</span></li>
+  <li>This Week: ₱<span id="weekTotal">0</span></li>
+  <li>This Month: ₱<span id="monthTotal">0</span></li>
+  <li>This Year: ₱<span id="yearTotal">0</span></li>
+</ul>
+
+<!-- Edit Modal -->
+<div id="editModal" class="modal">
+  <div class="modal-content">
+    <span class="close" id="closeModal">&times;</span>
+    <h3>Edit Expense</h3>
+    <input type="date" id="editDate" required>
+    <select id="editCategory" required>
+      <option value="" disabled>Select Category</option>
+      <option value="Food">Food 🍔</option>
+      <option value="Transport">Transport 🚌</option>
+      <option value="Bills">Bills 💡</option>
+      <option value="Shopping">Shopping 🛍️</option>
+      <option value="Entertainment">Entertainment 🎮</option>
+      <option value="Others">Others 📝</option>
+    </select>
+    <input type="number" id="editAmount" placeholder="Amount" required>
+    <button id="saveEdit">Save Changes</button>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
+
